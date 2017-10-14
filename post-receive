@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+from sys import stdin
+import socket
+import struct
+import os
+
+def msgPack(msg):
+    return struct.pack('!I%ds' % len(msg), len(msg), msg)
+
+IP = '127.0.0.1'
+PORT = 3456
+PROJECT = os.path.relpath(os.getcwd(), os.path.dirname(os.path.realpath(__file__)))[:-4]
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((IP, PORT))
+
+for line in stdin.readlines():
+    s.send(msgPack(PROJECT + ' ' + line.strip()))
+
+s.close()
