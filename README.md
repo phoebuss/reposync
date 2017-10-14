@@ -1,5 +1,5 @@
-RepoSync: set of tools to keep scattered codebase synced
-=========================================================
+RepoSync: keeps scattered codebases synced
+==========================================
 
 Introduction
 ------------
@@ -50,10 +50,10 @@ repositories organized as following:
 	          -repo1.git
 	         /
 	codebase1--repo2.git
-			 \
-			  -repos--repo3.git
-			        \
-					 -repo4.git
+	         \
+	          -repos--repo3.git
+	                \
+	                 -repo4.git
 
 The file *post-receive* should be sit inside the folder of *codebase1*. And
 symbolic links to the *post-receive* file should be placed in the *hooks*
