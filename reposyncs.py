@@ -46,7 +46,16 @@ def main():
                     epoll.register(c.fileno(), select.EPOLLOUT)
                 elif event & select.EPOLLOUT:
                     c = conn[fileno]
-                    n = c.send(txbuf[c])
+                    try:
+                        n = c.send(txbuf[c])
+                    except Exception as e:
+                        print e
+                        c.close()
+                        epoll.unregister(fileno)
+                        del rxbuf[c]
+                        del txbuf[c]
+                        del conn[fileno]
+                        continue
                     txbuf[c] = txbuf[c][n:]
                     if not len(txbuf[c]):
                         epoll.modify(fileno, select.EPOLLIN)
